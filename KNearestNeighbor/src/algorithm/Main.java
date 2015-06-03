@@ -1,8 +1,10 @@
-package knn;
+package algorithm;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
-import visualization.*;
+import visualization.Visualization;
 
 
 
@@ -136,6 +138,56 @@ public class Main {
 		System.out.println("Errors: " + errors + "/" + ionosphere.size());
 		ionosphere.error = errors;
 		return ionosphere;
+	}
+		
+	public static Dataset<String> runIris(int kIris) {
+		ArffParser ionosphereParser = new ArffParser();
+		Dataset<String> iris = ionosphereParser.parseCategorical(path + "iris.arff", new String[] {}, "class");
+		//start kNN algorithm using leave-one-out cross-validation for ionosphere data set
+		
+		iris.cacheDistances();
+		int errors = 0;
+		for(int testObs = 0; testObs < iris.size(); testObs++) {
+			DataPoint<String> currObs = iris.getDataPoint(testObs);
+			ArrayList<DistanceTuple<String>> kNN = new ArrayList<DistanceTuple<String>>();
+			for(int i = 0; i < kIris; i++) {
+				kNN.add(currObs.distances.get(i));
+			}
+			
+			double sum = 0;
+			Integer[] frequencies = new Integer[3];
+			for(int i = 0; i < frequencies.length; i++) {
+				frequencies[i] = new Integer(0);
+			}
+			for(DistanceTuple<String> t : kNN) { 
+				if(t.point.result.equalsIgnoreCase("Iris-setosa")) {
+					frequencies[0]++;
+				} else if(t.point.result.equalsIgnoreCase("Iris-versicolor")){
+					frequencies[1]++;
+				} else {
+					frequencies[2]++;
+				}
+			}
+			
+			Integer maxValue = Collections.max(Arrays.asList(frequencies));
+			int val = maxValue.intValue();
+			String output = "";
+			if(val == frequencies[0]) {
+				output = "Iris-setosa";
+			} else if(val == frequencies[1]) {
+				output = "Iris-versicolor";
+			} else {
+				output = "Iris-virginica";
+			}
+			if(!currObs.result.equals(output)) {
+				errors++;
+			}
+			System.out.println(currObs + "\tkNN: " + output);
+			currObs.prediction = output;
+		}
+		System.out.println("Errors: " + errors + "/" + iris.size());
+		iris.error = errors;
+		return iris;
 	}
 
 }

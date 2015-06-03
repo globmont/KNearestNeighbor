@@ -1,11 +1,12 @@
 package visualization;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-import knn.DataPoint;
-import knn.Dataset;
-import knn.DistanceTuple;
-import knn.Main;
+import algorithm.DataPoint;
+import algorithm.Dataset;
+import algorithm.DistanceTuple;
+import algorithm.Main;
 
 public class RunListener implements ButtonListener {
 	
@@ -17,7 +18,8 @@ public class RunListener implements ButtonListener {
 	ArrayList<DistanceTuple> distances = new ArrayList<DistanceTuple>();
 	PointInfoWindow w;
 	
-	boolean ka, wa, ki, shouldDraw;
+	boolean ka, wa, ki, kiris, shouldDraw;
+	HashMap<String, Boolean> setFocused = new HashMap<String, Boolean>();
 	
 	float maxRadius = 0;
 	float circleRadius = 0;
@@ -42,7 +44,9 @@ public class RunListener implements ButtonListener {
 		int o = Integer.parseInt(parent.o.getValue());
 		
 		circleRadius = 0;
-		
+		for(String s: parent.d.values){
+			setFocused.put(s, false);
+		}
 		switch(parent.d.getValue()) {
 		case "ka":
 			kNNAutoVisualizer(k, n, o);
@@ -53,6 +57,8 @@ public class RunListener implements ButtonListener {
 		case "ki":
 			kNNIonosphereVisualizer(k, n, o);
 			break;
+		case "kiris":
+			kNNIrisVisualizer(k, n, o);
 		}
 		
 		ArrayList<DistanceTuple<Double>> distancesOrig = currObs.distances;
@@ -92,19 +98,24 @@ public class RunListener implements ButtonListener {
 			currObs.draw(parent, parent.originX, parent.originY, focusColor);
 			
 			
-			if(ka) {
+			if(setFocused.get("ka")) {
 				parent.method = "Mean";
 				parent.actualValue = String.format("%.2f", currObs.result);
 				parent.predictedValue = String.format("%.2f", currObs.prediction);
 				parent.error = String.format("%.2f", dataset.error);
-			} else if(wa) {
+			} else if(setFocused.get("wa")) {
 				parent.method = "Weighted average";
 				parent.actualValue = String.format("%.2f", currObs.result);
 				parent.predictedValue = String.format("%.2f", currObs.prediction);
 				parent.error = String.format("%.2f", dataset.error);
-			} else if(ki) {
+			} else if(setFocused.get("ki")) {
 				parent.method = "Mode";
-				parent.actualValue = (String) currObs.result;;
+				parent.actualValue = (String) currObs.result;
+				parent.predictedValue = (String) currObs.prediction;
+				parent.error = String.format("%.0f", dataset.error);
+			} else if(setFocused.get("kiris")) {
+				parent.method = "Mode";
+				parent.actualValue = (String) currObs.result;
 				parent.predictedValue = (String) currObs.prediction;
 				parent.error = String.format("%.0f", dataset.error);
 			}
@@ -130,9 +141,7 @@ public class RunListener implements ButtonListener {
 	}
 	
 	public void kNNAutoVisualizer(int k, int n, int o) {
-		ka = true;
-		wa = false;
-		ki = false;
+		setFocused.put("ka", true);
 		
 		this.dataset = Main.runAutosNormal(k);
 		this.currObs = dataset.getDataPoint(o);
@@ -141,22 +150,26 @@ public class RunListener implements ButtonListener {
 		
 	
 	public void wNNAutoVisualizer(int k, int n, int o) {
-		ka = false;
-		wa = true;
-		ki = false;
+		setFocused.put("wa", true);
 		
 		this.dataset = Main.runAutosWeighted(k);
 		this.currObs = dataset.getDataPoint(o);
 	}
 	
 	public void kNNIonosphereVisualizer(int k, int n, int o) {
-		ka = false;
-		wa = false;
-		ki = true;
+		setFocused.put("ki", true);
 		
 		this.dataset = Main.runIonosphereNormal(k);
 		this.currObs = dataset.getDataPoint(o);
 	}
+	
+	public void kNNIrisVisualizer(int k, int n, int o) {
+		setFocused.put("kiris", true);
+		
+		this.dataset = Main.runIris(k);
+		this.currObs = dataset.getDataPoint(o);
+	}
+	
 	
 	
 

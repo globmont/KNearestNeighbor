@@ -1,4 +1,4 @@
-package knn;
+package algorithm;
 
 public class DistanceTuple<R> {
 	public final DataPoint<R> point;

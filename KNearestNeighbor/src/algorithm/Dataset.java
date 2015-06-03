@@ -1,4 +1,4 @@
-package knn;
+package algorithm;
 
 import java.util.ArrayList;
 

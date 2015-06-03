@@ -2,8 +2,8 @@ package visualization;
 
 import java.util.Arrays;
 
-import knn.Dataset;
-import knn.DistanceTuple;
+import algorithm.Dataset;
+import algorithm.DistanceTuple;
 import processing.core.PApplet;
 
 public class InstructionsWindow {
@@ -63,6 +63,9 @@ public class InstructionsWindow {
 					+ "Then, click any point displayed on the screen to see more information about that data point.\nTo focus that datapoint, just click the focus button.\n\n"
 					+ "Note that the points' placements are randomized each time you click run, though the distance from\nthe origin remains the same. "
 					+ "Thus, if you click run twice with the same observation selected, you may\nget 2 different looking visualizations, though the data displayed is the same.\n\n"
+					+ "One more thing to note is that in some cases, multiple datapoints may have the same distance value\n"
+					+ "so the yellow circle may encapsulate more points than the k value. Regardless of this display, the\n"
+					+ "number of points being used to evaluate the result is still k points.\n\n"
 					+ "To see these instructions again, click the instructions button in the top right. Click anywhere outside\nthis box to exit.\n\n"
 					+ "Made by Nikhil Prasad.";
 			parent.text(instructions, this.x - this.width / 2.0f + 30, this.y - 225);

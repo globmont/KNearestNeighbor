@@ -2,8 +2,8 @@ package visualization;
 
 import java.util.Arrays;
 
-import knn.Dataset;
-import knn.DistanceTuple;
+import algorithm.Dataset;
+import algorithm.DistanceTuple;
 import processing.core.PApplet;
 
 public class PointInfoWindow {

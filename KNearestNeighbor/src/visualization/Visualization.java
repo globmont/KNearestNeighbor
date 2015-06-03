@@ -26,8 +26,8 @@ public class Visualization extends PApplet {
 	String oFieldDefaultText = "1";
 	String dropdownDefaultLabel = "kNN: Autos";
 	String dropdownDefaultValue = "ka";
-	String[] dropdownLabels = new String[] {"kNN: Autos", "wNN: Autos", "kNN: Ionosphere"};
-	String[] dropdownValues = new String[] {"ka", "wa", "ki"};
+	String[] dropdownLabels = new String[] {"kNN: Autos", "wNN: Autos", "kNN: Ionosphere", "kNN: Iris"};
+	String[] dropdownValues = new String[] {"ka", "wa", "ki", "kiris"};
 	
 	String method = "N/A";
 	String actualValue = "N/A";

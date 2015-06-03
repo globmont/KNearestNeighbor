@@ -14,5 +14,9 @@ The actual implementation of the algorithm is rather simple. First, the `ArffPar
 ## Visualization Information
 The Processing library was used to create the visualization. More information on Processing can be found at [https://processing.org/](https://processing.org/)
 
+A few possibly confusing aspects about the visualization: 
+1. The positions of the datapoints are randomized every time the run button is clicked. Thus, if you click the run button twice on the same observation, the visualization may look different in each instance. But, the data displayed is still the same since the distance from the origin is the same, just the angle is varied. 
+2. In some cases, multiple datapoints have the same distance from the origin. Thus, when the yellow circle grows, it may appear to encapsulate more than k points. Despite how it may look, it is still only using k points in its calculations. 
+
 ## Notes
-I have also included an extra dataset (`iris.arff`) to serve as a test dataset that wasn't given to me in the project prompt. 
+I have also included an extra dataset (`iris.arff`) to serve as a test dataset that wasn't given to me in the project prompt.
