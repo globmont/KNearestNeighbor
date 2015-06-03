@@ -40,18 +40,18 @@ public class Main {
 		DataPoint<Double> currObs = autos.getDataPoint(testObs);
 		ArrayList<DistanceTuple<Double>> kNN = new ArrayList<DistanceTuple<Double>>();
 		for(int i = 0; i < kAut; i++) {
-		kNN.add(currObs.distances.get(i));
+			kNN.add(currObs.distances.get(i));
 		}
 		
 		double sum = 0;
 		for(DistanceTuple<Double> t : kNN) { 
-		sum += t.point.result;
+			sum += t.point.result;
 		}
 		
 		sum /= kAut;
 		error += Math.abs(currObs.result - sum);
 		System.out.println(currObs + "\tkNN: " + sum);
-		currObs.prediction = sum;
+			currObs.prediction = sum;
 		}
 		error /= autos.size();
 		System.out.println("Mean Error: " + error + " in " + autos.size() + " instances");
@@ -83,12 +83,12 @@ public class Main {
 		DataPoint<Double> currObs = autos.getDataPoint(testObs);
 		ArrayList<DistanceTuple<Double>> kNN = new ArrayList<DistanceTuple<Double>>();
 		for(int i = 0; i < kAut; i++) {
-		kNN.add(currObs.distances.get(i));
+			kNN.add(currObs.distances.get(i));
 		}
 		
 		double totalSum = 0;
 		for(DistanceTuple<Double> t : kNN) { 
-		totalSum += t.point.result;
+			totalSum += t.point.result;
 		}
 		double sum = 0;
 		for(DistanceTuple<Double> t : kNN) { 
