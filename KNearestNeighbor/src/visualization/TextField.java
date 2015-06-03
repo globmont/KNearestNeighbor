@@ -1,5 +1,7 @@
 package visualization;
 
+import java.util.ArrayList;
+
 import processing.core.PApplet;
 
 public class TextField {
@@ -15,6 +17,7 @@ public class TextField {
 	boolean hasFocus = false;
 	boolean lineOn = true;
 	int blinkSpeed = 35;
+	ArrayList<TextFieldListener> listeners = new ArrayList<TextFieldListener>();
 	
 	public TextField(PApplet parent, float x, float y, float textSize, float width, int fillColor, int strokeColor, int textColor, String startingText) {
 		if(startingText == null) {
@@ -94,10 +97,22 @@ public class TextField {
 			if(parent.key == 8) {
 				if(text.length() > 0) {
 					text = text.substring(0, text.length() - 1);
+					triggerListeners();
 				}
 			} else if(parent.key >= 48 && parent.key <= 57) {
 				text += parent.key;
+				triggerListeners();
 			}
+		}
+	}
+	
+	public void addListener(TextFieldListener l) {
+		listeners.add(l);
+	}
+	
+	public void triggerListeners() {
+		for(TextFieldListener l : listeners) {
+			l.trigger(this);
 		}
 	}
 	

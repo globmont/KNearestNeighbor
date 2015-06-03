@@ -50,6 +50,8 @@ public class Visualization extends PApplet {
 		ib = new Button(this, 1300, 15, 15, 107, color(56, 119, 128), color(200), color(255), color(106, 169, 178), "Instructions", null);
 		i = new InstructionsWindow(this, 960, 540, 800, 600, 15, color(255));
 		
+		k.addListener(new KValueListener(n));
+		
 		i.active = true;
 		
 		b.addListener(r);
